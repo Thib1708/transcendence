@@ -62,21 +62,21 @@ services:
     # TODO remove this (enable it for logs directy in console) (for the print in python)
     tty: true
 
-  # nginx:
-  #   build:
-  #     context: ./${NGINX_FOLDER}/
-  #     dockerfile: Dockerfile
-  #   env_file: .env
-  #   ports:
-  #     - "7080:80"
-  #     - "8443:443"
-  #   depends_on:
-  #     - daphne
-  #   networks:
-  #     - transcendence
-  #   restart: on-failure
-  #   volumes:
-  #     - ssl_certificates:/etc/ssl
+  nginx:
+    build:
+      context: ./${NGINX_FOLDER}/
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "7080:80"
+      - "8443:443"
+    depends_on:
+      - daphne
+    networks:
+      - transcendence
+    restart: on-failure
+    volumes:
+      - ssl_certificates:/etc/ssl
 
   postgres:
     image: postgres:latest

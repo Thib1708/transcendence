@@ -12,3 +12,5 @@ leger bug quand on joue a deux la paddle vivante disparait et reapparait
 connexion https:
     - https://localhost:8001: impossible de charger des fichier externe (css, js), mais web socket fonctionnent parfaitement
     - https://localhost:8443: fichier css et js charges normalement mais pas de websocket
+
+ne pas afficher le channel prive si l'user est bloque
