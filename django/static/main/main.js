@@ -33,13 +33,11 @@ function navigateTo(event, route) {
 	.then(data => {
 		console.log('Data:', data);  // Log the data
 		if (data.redirect) {
-			// If the response contains a redirect URL, redirect to that URL
 			window.location.href = data.redirect;
 		} else if (data.html) {
-			// If the response contains HTML, display it in #page-content
 			document.querySelector('#page-content').innerHTML = data.html;
+            loadScriptsFromPage(data.html);
 		} else {
-			// Otherwise, display an error message
 			console.error('Unexpected response:', data);
 		}
 	})
@@ -48,6 +46,19 @@ function navigateTo(event, route) {
 	});
 
 	history.pushState(null, null, route);
+}
+
+function loadScriptsFromPage(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const scripts = doc.querySelectorAll('script');
+
+    scripts.forEach(script => {
+        const newScript = document.createElement('script');
+        newScript.src = script.src;
+        console.log(script.src);
+        document.head.appendChild(newScript);
+    });
 }
 
 window.addEventListener('popstate', function(event) {
@@ -60,6 +71,7 @@ window.addEventListener('popstate', function(event) {
 	.then(response => response.json())
 	.then(data => {
 		document.querySelector('#page-content').innerHTML = data.html;
+        reloadPageScripts(); // Rechargez les scripts après la mise à jour de #page-content
 	});
 });
 
@@ -110,6 +122,7 @@ function submitFormWithAjax(event) {
 		} else if (data.html) {
 			// If the response contains HTML, display it in #page-content
 			document.querySelector('#page-content').innerHTML = data.html;
+            reloadPageScripts(); // Rechargez les scripts après la mise à jour de #page-content
 		} else {
 			// Otherwise, display an error message
 			console.error('Unexpected response:', data);
@@ -184,3 +197,13 @@ function signOut() {
 // Add event listener for all forms to submit them with AJAX
 const forms = document.querySelectorAll('form');
 forms.forEach(form => form.addEventListener('submit', submitFormWithAjax));
+
+function reloadPageScripts() {
+    // Recherchez et exécutez les scripts inclus dans #page-content
+    const scripts = document.querySelectorAll('#page-content script');
+    scripts.forEach(script => {
+        const nouveauScript = document.createElement('script');
+        nouveauScript.src = script.src;
+        document.head.appendChild(nouveauScript);
+    });
+}

@@ -1,5 +1,3 @@
-import * as utils from './utils.js';
-
 // TODO separer dans des fichiers differents
 
 let     websocketProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -26,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const message = {
                 type: 'paddle_move',
                 key: 'keydown',
-                direction: utils.getPaddleDirection(event.key),
-                id: utils.getPaddleID(event.key),
+                direction: getPaddleDirection(event.key),
+                id: getPaddleID(event.key),
             };
             socket.send(JSON.stringify(message));
         }
@@ -43,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const message = {
                 type: 'paddle_move',
                 key: 'keyup',
-                direction: utils.getPaddleDirection(event.key),
-                id: utils.getPaddleID(event.key),
+                direction: getPaddleDirection(event.key),
+                id: getPaddleID(event.key),
             };
             socket.send(JSON.stringify(message));
         }
@@ -52,8 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     socket.addEventListener('open', (event) => {
         console.log('Connected to websocket server');
-        const gameMode = window.gameMode;
-        console.log(gameMode);
+        const gameMode = document.querySelector('script[data-game-mode]').getAttribute('data-game-mode');
         const message = {
             type: gameMode,
         };
@@ -89,9 +86,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// main.js
+console.log('main.js loaded');
 
 var phaserGame;
-var config = {
+var config;
+window.addEventListener('load', function () {
+config = {
     type: Phaser.AUTO,
     width: 0,
     height: 0,
@@ -109,6 +110,7 @@ var config = {
     },
     backgroundColor: '#212121',
 };
+});
 
 const elements = {
     scoreText: [],

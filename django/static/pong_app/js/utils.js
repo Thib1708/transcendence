@@ -1,4 +1,4 @@
-export function getPaddleID(key) {
+function getPaddleID(key) {
 	if (key === 'o' || key === 'l') {
 		return '1';
 	} else if (key === 'w' || key === 's') {
@@ -13,7 +13,7 @@ export function getPaddleID(key) {
 	}
 }
 
-export function getPaddleDirection(key) {
+function getPaddleDirection(key) {
 	if (key === 'o' || key === 'w') {
 		return 'up';
 	} else if (key === 'l' || key === 's') {

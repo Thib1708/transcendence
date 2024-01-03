@@ -10,9 +10,8 @@
 </div>
 
 {% load static %}
-<script>
-	window.gameMode = "{{ gameMode }}";
-</script>
+<script data-game-mode="{{ gameMode }}"></script>
 
 <script src="{% static 'pong_app/js/phaser.min.js' %}"></script>
-<script type="module" src="{% static 'pong_app/js/main.js' %}"></script>
+<script src="{% static 'pong_app/js/utils.js' %}"></script>
+<script src="{% static 'pong_app/js/main.js' %}"></script>

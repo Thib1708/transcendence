@@ -2,16 +2,15 @@
 	<h1>Pong game</h1>
 {% endif %}
 
-<div class="score_bar">
+<!-- <div class="score_bar">
 	<span class="player_score id0"></span>
 	<span class="player_score id1"></span>
 	<span class="player_score id2"></span>
 	<span class="player_score id3"></span>
-</div>
+</div> -->
 
 {{ gameMode|json_script:"game_mode" }}
 
 <!-- TODO dire a leon d'ajouter un bloc pour le js (en bas de page absolument) -->
 
 <script src="{% static 'pong_app/js/phaser.min.js' %}"></script>
-<script type="module" src="{% static 'pong_app/js/main.js' %}"></script>
